@@ -8,7 +8,7 @@ class Square:
         """
         Initializes a new instance of the Square class with an optional size.
         """
-        if type(size) != int:
+        if not isinstance(size, int):
             raise TypeError("size must be an integer")
         elif size < 0:
             raise ValueError("size must be >= 0")
