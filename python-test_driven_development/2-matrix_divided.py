@@ -18,7 +18,6 @@ def matrix_divided(matrix, div):
         TypeError: if div is neither int nor float
         ZeroDivisionError: when div is zero
     """
-
     if not isinstance(matrix, list):
         raise TypeError("matrix must be a matrix (list of lists)\
                 of integers/floats")
@@ -47,6 +46,6 @@ def matrix_divided(matrix, div):
 
     return new_matrix
 
-if __name__ == "__main__":
-    import doctest
+    if __name__ == "__main__":
+        import doctest
         doctest.testfile("tests/2-matrix_divided.txt")
