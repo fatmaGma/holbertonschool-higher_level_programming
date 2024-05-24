@@ -1,20 +1,19 @@
 #!/usr/bin/python3
+"""print my name"""
 
 
 def say_my_name(first_name, last_name=""):
-    """
-    Prints my name
+    """say My name is first_name last_name
+
+    Args:
+    first_name (str): explicit
+    last_name (str, optional): explicit. Defaults to "".
 
     Raises:
-    TypeError:first_name must be a string
-    TypeError:last_name must be a string
+    TypeError: Need to be a str
     """
-    if not isinstance(first_name, (str)):
+    if not isinstance(first_name, str):
         raise TypeError("first_name must be a string")
-    if not isinstance(last_name, (str)):
+    if not isinstance(last_name, str):
         raise TypeError("last_name must be a string")
-    print("My name is {:s} {:s}".format(first_name, last_name))
-
-    if __name__ == "__main__":
-        import doctest
-        doctest.testfile("tests/tests/3-say_my_name.txt")
+    print("My name is {} {}".format(first_name, last_name))
