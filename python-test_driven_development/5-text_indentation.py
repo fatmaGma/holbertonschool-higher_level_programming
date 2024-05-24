@@ -1,25 +1,31 @@
 #!/usr/bin/python3
+"""
+indent text fter . : ?
+"""
 
 
 def text_indentation(text):
-    """
-    Prints a new line
+    """indent text after certain character
 
-    Raise:
-    TypeError: text must be a string
+    Args:
+    text (str): text to indent
+
+    Raises:
+    TypeError: text is notr a string
     """
+
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    new_text = ""
-    for string in text:
-        new_text += string
-        if string in [".", "?", ":"]:
-            new_text += "\n\n"
-
-    print(new_text)
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testfile("tests/5-text_indentation.txt")
+    characters = [".", ":", "?"]
+    i = 0
+    while i < len(text):
+        if text[i] in characters:
+            print(text[i], end="")
+            print("\n")
+            i += 1
+            while i < len(text) and text[i] == ' ':
+                i += 1
+            continue
+        print(text[i], end="")
+        i += 1
