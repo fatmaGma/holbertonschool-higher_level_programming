@@ -24,6 +24,6 @@ class CustomObject:
         try:
             with open(filename, 'rb') as file:
                 return pickle.load(file)
-            except Exception as e:
-                print(f"Error during deserialization: {e}")
-                return None
+        except Exception as e:
+            print(f"Error during deserialization: {e}")
+            return None
