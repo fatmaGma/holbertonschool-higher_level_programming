@@ -1,24 +1,44 @@
 #!/usr/bin/python3
-"""Module that lists all states with a name starting with N"""
-
+"""
+Script that lists all states from the database.
+"""
 import MySQLdb
 import sys
 
+def connectDb(user, password, db):
+    """
+    Get connection with the database.
+
+    Args:
+    user (str): Username of the user.
+    password (str): Password of the user.
+    db (str): Database to retrieve.
+
+    Return:
+    Connection database.
+    """
+    conn = MySQLdb.connect(
+            host="localhost",
+            port=3306,
+            user=user,
+            passwd=password,
+            db=db,
+            charset="utf8"
+    )
+    return conn
+
 
 if __name__ == "__main__":
-    connection = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2],
-            db=sys.argv[3])
-    """Connecting to the MySQL server"""
+    user = sys.argv[1]
+    password = sys.argv[2]
+    db = sys.argv[3]
 
-    cursor = connection.cursor()
-    """Creating a cursor object to execute queries"""
-
-    cursor.execute("SELECT * FROM states ORDER BY id ASC")
-    """Executing the SELECT query to retrieve all states"""
-
-    [print(state) for state in cursor.fetchall() if state[1][0] == "N"]
-    """Display the results"""
-
-    cursor.close()
-    connection.close()
-    """Closing the cursor and the connection"""
+    conn = connectDb(user, password, db)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM states ORDER BY states.id ASC")
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        if row[1].startswith("N"):
+            print(row)
+    cur.close()
+    conn.close()
