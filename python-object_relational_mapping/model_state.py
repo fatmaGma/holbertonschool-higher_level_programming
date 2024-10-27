@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 """
-Ce script crée la table 'states' dans la base de données MySQL.
+Ce fichier contient la définition de la classe State et une instance
+Base = declarative_base().
 """
 
-import sys
-from model_state import Base, State
-from sqlalchemy import create_engine
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
-if __name__ == "__main__":
-    # Récupération des arguments (nom d'utilisateur, mot de passe et nom de la base de données)
-    mysql_username = sys.argv[1]
-    mysql_password = sys.argv[2]
-    db_name = sys.argv[3]
+# Création de l'instance Base
+Base = declarative_base()
 
-    # Création de l'engine SQLAlchemy
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(mysql_username, mysql_password, db_name), pool_pre_ping=True)
-
-    # Création de toutes les tables
-    Base.metadata.create_all(engine)
+class State(Base):
+    """
+    Classe State qui hérite de Base.
+    Représente la table MySQL 'states'.
+    """
+    __tablename__ = 'states'
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String(128), nullable=False)
