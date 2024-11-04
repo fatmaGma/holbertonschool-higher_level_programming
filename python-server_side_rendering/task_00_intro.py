@@ -1,33 +1,35 @@
+import os
+
 def generate_invitations(template, attendees):
-    # Vérifier si le modèle est une chaîne de caractères
+    # Vérifier le type des entrées
     if not isinstance(template, str):
-        print("Erreur : Le modèle doit être une chaîne de caractères.")
+        print("Error: Template is not a string.")
         return
-
-    # Vérifier si les participants sont une liste de dictionnaires
     if not isinstance(attendees, list) or not all(isinstance(attendee, dict) for attendee in attendees):
-        print("Erreur : Les participants doivent être une liste de dictionnaires.")
+        print("Error: Attendees is not a list of dictionaries.")
         return
 
-    # Vérifier si le modèle est vide
-    if not template.strip():
-        print("Le modèle est vide, aucun fichier de sortie généré.")
+    # Vérifier si le template est vide
+    if not template:
+        print("Template is empty, no output files generated.")
         return
 
     # Vérifier si la liste des participants est vide
     if not attendees:
-        print("Aucune donnée fournie, aucun fichier de sortie généré.")
+        print("No data provided, no output files generated.")
         return
 
     # Traiter chaque participant
-    for idx, attendee in enumerate(attendees, start=1):
+    for index, attendee in enumerate(attendees, start=1):
+        # Remplacer les espaces réservés par les valeurs du dictionnaire
         output = template
         for key in ["name", "event_title", "event_date", "event_location"]:
-            value = attendee.get(key, "N/A") if attendee.get(key) is not None else "N/A"
-            output = output.replace(f"{{{key}}}", value)
+            value = attendee.get(key, "N/A")
+            output = output.replace(f"{{{key}}}", value if value is not None else "N/A")
 
-        # ecrire dans le fichier de sortie
-        output_filename = f"output_{idx}.txt"
-        with open(output_filename, 'w') as f:
-            f.write(output)
-        print(f"Généré {output_filename}")
+        # Écrire le résultat dans un fichier
+        output_filename = f"output_{index}.txt"
+        with open(output_filename, 'w') as output_file:
+            output_file.write(output)
+
+    print(f"{len(attendees)} invitation files generated.")
